@@ -1,0 +1,22 @@
+{
+  "name": "library-api-server",
+  "version": "1.0.0",
+  "description": "42 jiphyeonjeon library api server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Sejong",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mariadb": "^2.4.2",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.4"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
+  }
+}

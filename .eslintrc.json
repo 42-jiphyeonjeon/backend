@@ -1,0 +1,15 @@
+{
+    "env": {
+        "commonjs": true,
+        "es2020": true,
+        "node": true
+    },
+    "extends": ["airbnb-base"],
+    "parserOptions": {
+        "ecmaVersion": 11
+    },
+    "rules": {
+        "no-console": 0 // console 변수 사용 가능
+    },
+    "ignorePatterns": ["src/models/index.js"]
+}
