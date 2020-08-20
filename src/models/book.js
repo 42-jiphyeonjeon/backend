@@ -47,9 +47,13 @@ module.exports.bookTiger = (sequelize, DataTypes) => {
         field: 'call_number',
         type: DataTypes.STRING,
       },
+      identityNumber: {
+        field: "identity_number",
+        type: DataTypes.INTEGER,
+      },
       active: {
         field: 'active',
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
       },
       status: {
