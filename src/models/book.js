@@ -1,31 +1,32 @@
-'use strict';
-
 module.exports.bookInfo = (sequelize, DataTypes) => {
-  var bookInfo = sequelize.define('bookInfo', {
-    title: {
-      field: "title",
-      type: DataTypes.STRING(100),
-      allowNull: false,
+  const bookInfo = sequelize.define(
+    'bookInfo',
+    {
+      title: {
+        field: 'title',
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      author: {
+        field: 'author',
+        type: DataTypes.STRING(100),
+      },
+      publisher: {
+        field: 'publisher',
+        type: DataTypes.STRING(50),
+      },
+      isbn: {
+        field: 'isbn',
+        type: DataTypes.STRING(20),
+      },
     },
-    author: {
-      field: "author",
-      type: DataTypes.STRING(100),
+    {
+      underscored: true,
+      freezeTableName: true,
+      tableName: 'book_info',
     },
-    publisher: {
-      field: "publisher",
-      type: DataTypes.STRING(50),
-    },
-    isbn: {
-      field: "isbn",
-      type: DataTypes.STRING(20)
-    }
-  },
-  {
-    underscored: true,
-    freezeTableName: true,
-    tableName: "book_info"
-  });
-  bookInfo.associate = function (models) {
+  );
+  bookInfo.associate = function associate(models) {
     models.BookInfo.hasOne(models.BookTiger, {
       onDelete: 'cascade',
     });
@@ -34,37 +35,40 @@ module.exports.bookInfo = (sequelize, DataTypes) => {
 };
 
 module.exports.bookTiger = (sequelize, DataTypes) => {
-  var bookTiger = sequelize.define('bookTiger', {
-    category: {
-      field: "category",
-      type: DataTypes.STRING(50),
-      allowNull: false
+  const bookTiger = sequelize.define(
+    'bookTiger',
+    {
+      category: {
+        field: 'category',
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      callNumber: {
+        field: 'call_number',
+        type: DataTypes.STRING,
+      },
+      active: {
+        field: 'active',
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      status: {
+        field: 'status',
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
-    callNumber: {
-      field: "call_number",
-      type: DataTypes.STRING
+    {
+      underscored: true,
+      freezeTableName: true,
+      tableName: 'book_tiger',
     },
-    active : {
-      field: "active",
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    status: {
-      field: "status",
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-  },
-  {
-    underscored: true,
-    freezeTableName: true,
-    tableName: "book_tiger"
-  });
-  bookTiger.associate = function (models) {
+  );
+  bookTiger.associate = function associate(models) {
     bookTiger.belongsTo(models.UserAccount, {
       onDelete: 'cascade',
       foreignKey: {
-		name: 'donator_id',
+        name: 'donator_id',
         allowNull: true,
       },
     });
@@ -73,25 +77,28 @@ module.exports.bookTiger = (sequelize, DataTypes) => {
 };
 
 module.exports.category = (sequelize, DataTypes) => {
-    var category = sequelize.define('category', {
+  const category = sequelize.define(
+    'category',
+    {
       name: {
-        field: "name",
+        field: 'name',
         type: DataTypes.STRING(20),
-        allowNull: false
-      }
+        allowNull: false,
+      },
     },
     {
       underscored: true,
       freezeTableName: true,
-      tableName: "category"
+      tableName: 'category',
+    },
+  );
+  category.associate = function associate(models) {
+    category.hasOne(models.BookTiger, {
+      onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
     });
-    category.associate = function (models) {
-      category.hasOne(models.BookTiger, {
-        onDelete: 'cascade',
-        foreignKey: {
-          allowNull: false,
-        },
-      });
-    };
-    return category;
+  };
+  return category;
 };
