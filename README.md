@@ -1,4 +1,4 @@
-![node](https://img.shields.io/badge/node-v14.8.0-green)![npm](https://img.shields.io/badge/npm-v6.14.7-green)
+![node](https://img.shields.io/badge/node-v14.8.0-green) ![npm](https://img.shields.io/badge/npm-v6.14.7-green)
 
 # backend
 
@@ -28,7 +28,7 @@ node src/app.js # 또는 npm start
 
 ## 코드 포맷팅
 
-[eslint](https://eslint.org/), [airbnb code convention](https://github.com/tipjs/javascript-style-guide)을 사용하였습니다.
+[eslint](https://eslint.org/), [airbnb style guide](https://github.com/tipjs/javascript-style-guide)을 사용하였습니다.
 
 ``` bash 
 npx eslint src/ # src 폴더의 코드 스타일 점검
