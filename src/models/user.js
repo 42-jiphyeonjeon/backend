@@ -1,5 +1,5 @@
-module.exports.userAccount = (sequelize, DataTypes) => {
-  const userAccount = sequelize.define(
+module.exports.UserAccount = (sequelize, DataTypes) => {
+  const UserAccount = sequelize.define(
     'UserAccount',
     {
       userName: {
@@ -15,37 +15,50 @@ module.exports.userAccount = (sequelize, DataTypes) => {
       tableName: 'user_account',
     },
   );
-  userAccount.associate = function associate(models) {
-    models.UserAccount.hasOne(models.UserInfo, {
+  UserAccount.associate = function associate(models) {
+    UserAccount.hasMany(models.Checkout, {
+      onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    UserAccount.hasMany(models.BookTiger, {
+      onDelete: 'cascade',
+      foreignKey: {
+        name: 'donator_id',
+        allowNull: true,
+      },
+    });
+    UserAccount.belongsTo(models.UserInfo, {
       onDelete: 'cascade',
     });
-    models.UserAccount.hasOne(models.UserStatus, {
+    UserAccount.hasOne(models.UserStatus, {
       onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
     });
   };
-  return userAccount;
+  return UserAccount;
 };
 
-module.exports.userInfo = (sequelize, DataTypes) => {
-  const userInfo = sequelize.define(
+module.exports.UserInfo = (sequelize, DataTypes) => {
+  const UserInfo = sequelize.define(
     'UserInfo',
     {
       phoneNumber: {
         field: 'phone_number',
         type: DataTypes.STRING(50),
         unique: true,
-        allowNull: false,
       },
       email: {
         field: 'email',
         type: DataTypes.STRING(50),
         unique: true,
-        allowNull: false,
       },
       imageUrl: {
         field: 'image_url',
         type: DataTypes.STRING(500),
-        allowNull: false,
       },
     },
     {
@@ -54,18 +67,21 @@ module.exports.userInfo = (sequelize, DataTypes) => {
       tableName: 'user_info',
     },
   );
-  return userInfo;
+  UserInfo.associate = function associate(models) {
+    UserInfo.hasOne(models.UserAccount, {
+      onDelete: 'cascade',
+    });
+  };
+  return UserInfo;
 };
 
-module.exports.userStatus = (sequelize, DataTypes) => {
-  const userStatus = sequelize.define(
+module.exports.UserStatus = (sequelize, DataTypes) => {
+  const UserStatus = sequelize.define(
     'UserStatus',
     {
       banDate: {
         field: 'ban_date',
         type: DataTypes.DATEONLY,
-        unique: true,
-        allowNull: false,
       },
     },
     {
@@ -74,5 +90,13 @@ module.exports.userStatus = (sequelize, DataTypes) => {
       tableName: 'user_status',
     },
   );
-  return userStatus;
+  UserStatus.associate = function associate(models) {
+    UserStatus.belongsTo(models.UserAccount, {
+      onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
+  return UserStatus;
 };

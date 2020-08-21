@@ -1,6 +1,6 @@
-module.exports.checkout = (sequelize, DataTypes) => {
-  const checkout = sequelize.define(
-    'checkout',
+module.exports.Checkout = (sequelize, DataTypes) => {
+  const Checkout = sequelize.define(
+    'Checkout',
     {
       dueDate: {
         field: 'due_date',
@@ -27,19 +27,19 @@ module.exports.checkout = (sequelize, DataTypes) => {
       tableName: 'checkout',
     },
   );
-  checkout.associate = function associate(models) {
-    checkout.belongsTo(models.BookTiger, {
+  Checkout.associate = function associate(models) {
+    Checkout.belongsTo(models.BookTiger, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
       },
     });
-    checkout.belongsTo(models.UserAccount, {
+    Checkout.belongsTo(models.UserAccount, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
       },
     });
   };
-  return checkout;
+  return Checkout;
 };

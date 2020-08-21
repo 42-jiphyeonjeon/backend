@@ -35,13 +35,13 @@ fs.readdirSync(__dirname)
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.UserAccount = require('./user.js').userAccount(sequelize, Sequelize);
-db.UserInfo = require('./user.js').userInfo(sequelize, Sequelize);
-db.UserStatus = require('./user.js').userStatus(sequelize, Sequelize);
-db.BookInfo = require('./book.js').bookInfo(sequelize, Sequelize);
-db.BookTiger = require('./book.js').bookTiger(sequelize, Sequelize);
-db.Category = require('./book.js').category(sequelize, Sequelize);
-db.Checkout = require('./checkout.js').checkout(sequelize, Sequelize);
+db.UserAccount = require('./user.js').UserAccount(sequelize, Sequelize);
+db.UserInfo = require('./user.js').UserInfo(sequelize, Sequelize);
+db.UserStatus = require('./user.js').UserStatus(sequelize, Sequelize);
+db.BookInfo = require('./book.js').BookInfo(sequelize, Sequelize);
+db.BookTiger = require('./book.js').BookTiger(sequelize, Sequelize);
+db.Category = require('./book.js').Category(sequelize, Sequelize);
+db.Checkout = require('./checkout.js').Checkout(sequelize, Sequelize);
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
