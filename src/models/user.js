@@ -1,5 +1,5 @@
-module.exports.userAccount = (sequelize, DataTypes) => {
-  const userAccount = sequelize.define(
+module.exports.UserAccount = (sequelize, DataTypes) => {
+  const UserAccount = sequelize.define(
     'UserAccount',
     {
       userName: {
@@ -15,35 +15,35 @@ module.exports.userAccount = (sequelize, DataTypes) => {
       tableName: 'user_account',
     },
   );
-  userAccount.associate = function associate(models) {
-    userAccount.hasMany(models.Checkout, {
+  UserAccount.associate = function associate(models) {
+    UserAccount.hasMany(models.Checkout, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
       },
     });
-    models.UserAccount.hasMany(models.BookTiger, {
+    UserAccount.hasMany(models.BookTiger, {
       onDelete: 'cascade',
       foreignKey: {
         name: 'donator_id',
         allowNull: true,
       },
     });
-    userAccount.belongsTo(models.UserInfo, {
+    UserAccount.belongsTo(models.UserInfo, {
       onDelete: 'cascade',
     });
-    userAccount.hasOne(models.UserStatus, {
+    UserAccount.hasOne(models.UserStatus, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
       },
     });
   };
-  return userAccount;
+  return UserAccount;
 };
 
-module.exports.userInfo = (sequelize, DataTypes) => {
-  const userInfo = sequelize.define(
+module.exports.UserInfo = (sequelize, DataTypes) => {
+  const UserInfo = sequelize.define(
     'UserInfo',
     {
       phoneNumber: {
@@ -67,16 +67,16 @@ module.exports.userInfo = (sequelize, DataTypes) => {
       tableName: 'user_info',
     },
   );
-  userInfo.associate = function associate(models) {
-    userInfo.hasOne(models.UserAccount, {
+  UserInfo.associate = function associate(models) {
+    UserInfo.hasOne(models.UserAccount, {
       onDelete: 'cascade',
     });
-  }
-  return userInfo;
+  };
+  return UserInfo;
 };
 
-module.exports.userStatus = (sequelize, DataTypes) => {
-  const userStatus = sequelize.define(
+module.exports.UserStatus = (sequelize, DataTypes) => {
+  const UserStatus = sequelize.define(
     'UserStatus',
     {
       banDate: {
@@ -90,13 +90,13 @@ module.exports.userStatus = (sequelize, DataTypes) => {
       tableName: 'user_status',
     },
   );
-  userStatus.associate = function associate(models) {
-    userStatus.belongsTo(models.UserAccount, {
+  UserStatus.associate = function associate(models) {
+    UserStatus.belongsTo(models.UserAccount, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
       },
     });
-  }
-  return userStatus;
+  };
+  return UserStatus;
 };

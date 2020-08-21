@@ -1,6 +1,6 @@
-module.exports.bookInfo = (sequelize, DataTypes) => {
-  const bookInfo = sequelize.define(
-    'bookInfo',
+module.exports.BookInfo = (sequelize, DataTypes) => {
+  const BookInfo = sequelize.define(
+    'BookInfo',
     {
       title: {
         field: 'title',
@@ -26,31 +26,31 @@ module.exports.bookInfo = (sequelize, DataTypes) => {
       tableName: 'book_info',
     },
   );
-  bookInfo.associate = function associate(models) {
+  BookInfo.associate = function associate(models) {
     models.BookInfo.hasMany(models.BookTiger, {
       onDelete: 'cascade',
     });
   };
-  return bookInfo;
+  return BookInfo;
 };
 
-module.exports.bookTiger = (sequelize, DataTypes) => {
-  const bookTiger = sequelize.define(
-    'bookTiger',
+module.exports.BookTiger = (sequelize, DataTypes) => {
+  const BookTiger = sequelize.define(
+    'BookTiger',
     {
       callNumber: {
         field: 'call_number',
         type: DataTypes.STRING,
       },
       identityNumber: {
-        field: "identity_number",
+        field: 'identity_number',
         type: DataTypes.INTEGER,
       },
       active: {
         field: 'active',
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true
+        defaultValue: true,
       },
       status: {
         field: 'status',
@@ -64,36 +64,36 @@ module.exports.bookTiger = (sequelize, DataTypes) => {
       tableName: 'book_tiger',
     },
   );
-  bookTiger.associate = function associate(models) {
-    bookTiger.belongsTo(models.UserAccount, {
+  BookTiger.associate = function associate(models) {
+    BookTiger.belongsTo(models.UserAccount, {
       onDelete: 'cascade',
       foreignKey: {
         name: 'donator_id',
         allowNull: true,
       },
     });
-    bookTiger.belongsTo(models.BookInfo, {
+    BookTiger.belongsTo(models.BookInfo, {
       onDelete: 'cascade',
     });
-    bookTiger.belongsTo(models.Category, {
+    BookTiger.belongsTo(models.Category, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
       },
     });
-    bookTiger.hasMany(models.Checkout, {
+    BookTiger.hasMany(models.Checkout, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
       },
     });
   };
-  return bookTiger;
+  return BookTiger;
 };
 
-module.exports.category = (sequelize, DataTypes) => {
-  const category = sequelize.define(
-    'category',
+module.exports.Category = (sequelize, DataTypes) => {
+  const Category = sequelize.define(
+    'Category',
     {
       name: {
         field: 'name',
@@ -107,13 +107,13 @@ module.exports.category = (sequelize, DataTypes) => {
       tableName: 'category',
     },
   );
-  category.associate = function associate(models) {
-    category.hasMany(models.BookTiger, {
+  Category.associate = function associate(models) {
+    Category.hasMany(models.BookTiger, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
       },
     });
   };
-  return category;
+  return Category;
 };
