@@ -16,11 +16,27 @@ module.exports.userAccount = (sequelize, DataTypes) => {
     },
   );
   userAccount.associate = function associate(models) {
-    models.UserAccount.hasOne(models.UserInfo, {
+    userAccount.hasMany(models.Checkout, {
+      onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    models.UserAccount.hasMany(models.BookTiger, {
+      onDelete: 'cascade',
+      foreignKey: {
+        name: 'donator_id',
+        allowNull: true,
+      },
+    });
+    userAccount.belongsTo(models.UserInfo, {
       onDelete: 'cascade',
     });
-    models.UserAccount.hasOne(models.UserStatus, {
+    userAccount.hasOne(models.UserStatus, {
       onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
     });
   };
   return userAccount;
@@ -34,18 +50,15 @@ module.exports.userInfo = (sequelize, DataTypes) => {
         field: 'phone_number',
         type: DataTypes.STRING(50),
         unique: true,
-        allowNull: false,
       },
       email: {
         field: 'email',
         type: DataTypes.STRING(50),
         unique: true,
-        allowNull: false,
       },
       imageUrl: {
         field: 'image_url',
         type: DataTypes.STRING(500),
-        allowNull: false,
       },
     },
     {
@@ -54,6 +67,11 @@ module.exports.userInfo = (sequelize, DataTypes) => {
       tableName: 'user_info',
     },
   );
+  userInfo.associate = function associate(models) {
+    userInfo.hasOne(models.UserAccount, {
+      onDelete: 'cascade',
+    });
+  }
   return userInfo;
 };
 
@@ -64,8 +82,6 @@ module.exports.userStatus = (sequelize, DataTypes) => {
       banDate: {
         field: 'ban_date',
         type: DataTypes.DATEONLY,
-        unique: true,
-        allowNull: false,
       },
     },
     {
@@ -74,5 +90,13 @@ module.exports.userStatus = (sequelize, DataTypes) => {
       tableName: 'user_status',
     },
   );
+  userStatus.associate = function associate(models) {
+    userStatus.belongsTo(models.UserAccount, {
+      onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  }
   return userStatus;
 };
