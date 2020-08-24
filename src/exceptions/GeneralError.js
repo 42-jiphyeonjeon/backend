@@ -5,8 +5,8 @@ class GeneralError extends Error {
   }
 
   getCode() {
-	const BadRequest = require('./BadRequest');
-	const NotFound = require('./NotFound');
+    const BadRequest = require('./BadRequest');
+    const NotFound = require('./NotFound');
     if (this instanceof BadRequest) {
       return 400;
     } if (this instanceof NotFound) {
