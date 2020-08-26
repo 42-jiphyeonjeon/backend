@@ -1,9 +1,15 @@
 const express = require('express');
 const {
-  BookTiger, BookInfo, Checkout, UserAccount, Log,
+  BookTiger, BookInfo, Checkout, Log, UserStatus,
 } = require('../models');
 
 const router = express.Router();
+
+Date.prototype.addDays = function (days) {
+  const date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+};
 
 router.get('/:checkoutId', (req, res) => {
   const { checkoutId } = req.params;
@@ -21,11 +27,20 @@ router.get('/:checkoutId', (req, res) => {
 
 router.post('/:checkoutId', (req, res) => {
   const { checkoutId } = req.params;
-  const { checkinStatus } = req.body;
+  const { deactive, checkinStatus } = req.body;
   Checkout.findByPk(checkoutId).then((result) => {
     const now = new Date();
-    if (result.dueDate < now) {
-      console.log('user_status ban_date update');
+    const duedateMath = new Date(result.dueDate);
+    const msDay = 60 * 60 * 24 * 1000;
+    if (duedateMath < now) {
+      const diff = Math.floor((now - duedateMath) / msDay);
+      // console.log(now, now.addDays(diff));
+      UserStatus.update({ banDate: now.addDays(diff) }, {
+        where: { UserAccountId: result.UserAccountId },
+      });
+    }
+    if (deactive) {
+      console.log('book_tiger status update deactive');
     }
     Log.create({
       dueDate: result.dueDate,
@@ -37,7 +52,7 @@ router.post('/:checkoutId', (req, res) => {
     }).then(() => {
       Checkout.destroy({ where: { id: checkoutId } });
     }).then(() => {
-      res.redirect('/');
+      res.send('메인으로 이동');
     });
   });
 });

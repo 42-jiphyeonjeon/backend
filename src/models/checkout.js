@@ -25,6 +25,7 @@ module.exports.Checkout = (sequelize, DataTypes) => {
       underscored: true,
       freezeTableName: true,
       tableName: 'checkout',
+      //timestamps: true,
     },
   );
   Checkout.associate = function associate(models) {
