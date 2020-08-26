@@ -1,5 +1,5 @@
 module.exports = {
-  up: async (queryInterface) => queryInterface.bulkInsert('checkout', [{
+  up: async (queryInterface) => queryInterface.bulkInsert('log', [{
     due_date: '2020-08-26',
     checkin_date: '2020-08-26',
     checkout_status: 'no harm(dachung)',
@@ -18,5 +18,5 @@ module.exports = {
     created_at: '2020-8-21',
     updated_at: '2020-8-21',
   }], {}),
-  down: async (queryInterface) => queryInterface.bulkDelete('checkout', null, {}),
+  down: async (queryInterface) => queryInterface.bulkDelete('log', null, {}),
 };
