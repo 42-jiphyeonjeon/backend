@@ -81,7 +81,13 @@ module.exports.BookTiger = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
-    BookTiger.hasMany(models.Checkout, {
+    BookTiger.hasOne(models.Checkout, {
+      onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+    BookTiger.hasMany(models.Log, {
       onDelete: 'cascade',
       foreignKey: {
         allowNull: false,
