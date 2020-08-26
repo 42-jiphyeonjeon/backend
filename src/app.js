@@ -1,5 +1,6 @@
 const express = require('express');
 const models = require('./models');
+const errorHandler = require('./exceptions/error_handler');
 
 const app = express();
 const port = 3000;
@@ -15,6 +16,7 @@ models.sequelize
   });
 
 app.use(express.json());
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`api server listening at http://localhost:${port}`);
