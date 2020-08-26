@@ -22,6 +22,12 @@ module.exports.UserAccount = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
+    UserAccount.hasMany(models.Log, {
+      onDelete: 'cascade',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
     UserAccount.hasMany(models.BookTiger, {
       onDelete: 'cascade',
       foreignKey: {
