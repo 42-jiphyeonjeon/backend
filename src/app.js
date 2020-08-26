@@ -5,6 +5,8 @@ const errorHandler = require('./exceptions/error_handler');
 const app = express();
 const port = 3000;
 
+const checkinRouter = require('./routes/checkin');
+
 models.sequelize
   .sync()
   .then(() => {
@@ -17,6 +19,8 @@ models.sequelize
 
 app.use(express.json());
 app.use(errorHandler);
+
+app.use('/checkin', checkinRouter);
 
 app.listen(port, () => {
   console.log(`api server listening at http://localhost:${port}`);
