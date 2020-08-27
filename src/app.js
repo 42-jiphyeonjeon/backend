@@ -2,6 +2,8 @@ const express = require('express');
 const models = require('./models');
 const errorHandler = require('./exceptions/error_handler');
 
+const checkOutRouter = require('./routes/check_out');
+
 const app = express();
 const port = 3000;
 
@@ -16,6 +18,7 @@ models.sequelize
   });
 
 app.use(express.json());
+app.use('/checkout', checkOutRouter);
 app.use(errorHandler);
 
 app.listen(port, () => {
