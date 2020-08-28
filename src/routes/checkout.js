@@ -55,7 +55,7 @@ const checkoutRouter = async (req, res, next) => {
       console.log('checkout created-----------------');
       console.log(checkoutCreated.dataValues);
       console.log('---------------------------------');
-      res.status(200).send('checkout success');
+      res.redirect('/');
     } else if (!bookTiger.active) throw new Error('this book\'s condition is bad');
     else if (checkout) throw new Error('this book is unavailabe');
     else {
