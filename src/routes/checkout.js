@@ -25,10 +25,16 @@ const checkoutRouter = async (req, res, next) => {
       where: { username },
     });
     if (!userAccount) {
+      const userInfo = await db.UserInfo.create({
+        email: `${username}@student.42seoul.kr`,
+        createdAt: moment(),
+        updatedAt: moment(),
+      });
       userAccount = await db.UserAccount.create({
         userName: username,
-        createdAt: moment().format('YYYY-MM-DD'),
-        updatedAt: moment().format('YYYY-MM-DD'),
+        createdAt: moment(),
+        updatedAt: moment(),
+        UserInfoId: userInfo.id,
       });
     }
     let userStatus = await db.UserStatus.findOne({
@@ -37,18 +43,17 @@ const checkoutRouter = async (req, res, next) => {
     if (!userStatus) {
       userStatus = await db.UserStatus.create({
         UserAccountId: userAccount.id,
-        createdAt: moment().format('YYYY-MM-DD'),
-        updatedAt: moment().format('YYYY-MM-DD'),
+        createdAt: moment(),
+        updatedAt: moment(),
       });
     }
     if (bookTiger.active && !checkout
         && (!userStatus.banDate || moment(userStatus.banDate) < moment())) {
       const checkoutCreated = await db.Checkout.create({
         dueDate: moment().add(13, 'day').format('YYYY-MM-DD'),
-        checkinDate: moment().format('YYYY-MM-DD'),
         checkoutStatus,
-        createdAt: moment().format('YYYY-MM-DD'),
-        updatedAt: moment().format('YYYY-MM-DD'),
+        createdAt: moment(),
+        updatedAt: moment(),
         BookTigerId: bookTiger.id,
         UserAccountId: userAccount.id,
       });
