@@ -7,11 +7,11 @@ const router = express.Router();
 
 const checkout = async (req, res, next) => {
   const bookTigerID = req.params.bookTigerID;
-  const username = req.query.username;
-  const bookCondition = req.query.book_condition;
+  const username = req.body.username;
+  const checkoutStatus = req.body.checkoutStatus;
 
   try {
-    if (!bookTigerID || !username || !bookCondition)
+    if (!bookTigerID || !username || !checkoutStatus)
       throw new BadRequest('param or query is missing');
       
     const bookTiger = await db.BookTiger.findOne({
@@ -43,7 +43,7 @@ const checkout = async (req, res, next) => {
       let checkoutCreated = await db.Checkout.create({
         dueDate: moment().add(13, 'day').format('YYYY-MM-DD'),
         checkinDate: moment().format('YYYY-MM-DD'),
-        checkoutStatus: bookCondition,
+        checkoutStatus: checkoutStatus,
         createdAt: moment().format('YYYY-MM-DD'),
         updatedAt: moment().format('YYYY-MM-DD'),
         BookTigerId: bookTiger.id,
@@ -68,5 +68,6 @@ const checkout = async (req, res, next) => {
     next(e);
   }
 }
+
 router.post('/:bookTigerID?', checkout);
 module.exports = router;
