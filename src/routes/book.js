@@ -34,38 +34,6 @@ function serializeBookTigerList(bookTigers) {
   return bookTigers.map(serializeBookTiger);
 }
 
-router.get('/:bookId', (req, res, next) => {
-  const resData = { data: [] };
-  const { bookId } = req.params;
-  BookTiger.findOne({
-    attributes: ['id', 'identityNumber', 'active', 'status'],
-    where: {
-      id: bookId,
-    },
-    include: [
-      {
-        model: BookInfo,
-        attributes: ['title', 'author'],
-      },
-      {
-        model: Checkout,
-        attributes: ['id', 'dueDate'],
-        include: {
-          model: UserAccount,
-          attributes: ['userName'],
-        },
-      },
-    ],
-  }).then((bookTiger) => {
-    if (bookTiger === null) {
-      throw new NotFound('Bad pk');
-    }
-    resData.data = serializeBookTiger(bookTiger);
-    res.json(resData);
-  }).catch((err) => {
-    next(err);
-  });
-});
 
 router.get('/search', (req, res) => {
   const resJson = { data: [], count: 0 };
@@ -138,6 +106,39 @@ router.get('/overdue', (req, res) => {
       data: serializeBookTigerList(result.rows),
       count: result.count,
     });
+  });
+});
+
+router.get('/:bookId', (req, res, next) => {
+  const resData = { data: [] };
+  const { bookId } = req.params;
+  BookTiger.findOne({
+    attributes: ['id', 'identityNumber', 'active', 'status'],
+    where: {
+      id: bookId,
+    },
+    include: [
+      {
+        model: BookInfo,
+        attributes: ['title', 'author'],
+      },
+      {
+        model: Checkout,
+        attributes: ['id', 'dueDate'],
+        include: {
+          model: UserAccount,
+          attributes: ['userName'],
+        },
+      },
+    ],
+  }).then((bookTiger) => {
+    if (bookTiger === null) {
+      throw new NotFound('Bad pk');
+    }
+    resData.data = serializeBookTiger(bookTiger);
+    res.json(resData);
+  }).catch((err) => {
+    next(err);
   });
 });
 
