@@ -5,7 +5,7 @@ const NotFound = require('../exceptions/NotFound');
 const BadRequest = require('../exceptions/BadRequest');
 const router = express.Router();
 
-const borrow = async (req, res, next) => {
+const checkout = async (req, res, next) => {
   const bookTigerID = req.params.bookTigerID;
   const username = req.query.username;
   const bookCondition = req.query.book_condition;
@@ -52,7 +52,7 @@ const borrow = async (req, res, next) => {
       console.log('checkout created-----------------')
       console.log(checkoutCreated.dataValues)
       console.log('---------------------------------')
-      res.status(200).send('borrowing success')
+      res.status(200).send('checkout success')
     } else {
       if (!bookTiger.active)
         throw new Error('this book\'s condition is bad');
@@ -68,5 +68,5 @@ const borrow = async (req, res, next) => {
     next(e);
   }
 }
-router.post('/:bookTigerID?', borrow);
+router.post('/:bookTigerID?', checkout);
 module.exports = router;
