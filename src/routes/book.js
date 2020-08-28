@@ -61,7 +61,7 @@ router.get('/:bookId', (req, res, next) => {
       throw new NotFound('Bad pk');
     }
     resData.data = serializeBookTiger(bookTiger);
-    res.json();
+    res.json(resData);
   }).catch((err) => {
     next(err);
   });
