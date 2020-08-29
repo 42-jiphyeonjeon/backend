@@ -18,9 +18,8 @@ models.sequelize
   });
 
 app.use(express.json());
-app.use(errorHandler);
-
 app.use('/checkin', checkinRouter);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`api server listening at http://localhost:${port}`);
