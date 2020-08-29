@@ -10,8 +10,6 @@ fs.readdirSync(__dirname)
   .forEach((routeFile) => {
     const routeName = `/${routeFile.split('.')[0]}`;
     const route = require(`./${routeFile}`);
-    console.log(routeName);
-    console.log(route);
     router.use(routeName, route);
   });
 
