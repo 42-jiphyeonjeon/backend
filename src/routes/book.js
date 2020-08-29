@@ -56,7 +56,7 @@ router.get('/search', (req, res) => {
       },
       {
         model: Checkout,
-        attributes: ['dueDate'],
+        attributes: ['id', 'dueDate'],
         include: {
           model: UserAccount,
           attributes: ['userName'],
@@ -88,7 +88,7 @@ router.get('/overdue', (req, res) => {
       },
       {
         model: Checkout,
-        attributes: ['dueDate'],
+        attributes: ['id', 'dueDate'],
         where: {
           dueDate: {
             [Op.lt]: new Date(),
