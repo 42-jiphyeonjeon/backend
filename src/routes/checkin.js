@@ -2,7 +2,7 @@ const express = require('express');
 const NotFound = require('../exceptions/NotFound');
 const BadRequest = require('../exceptions/BadRequest');
 const {
-  Checkout, Log, UserStatus,
+  Checkout, Log, UserStatus, BookTiger,
 } = require('../models');
 
 const router = express.Router();
@@ -44,7 +44,7 @@ router.post('/:checkoutId', (req, res, next) => {
     }).then(() => {
       Checkout.destroy({ where: { id: checkoutId } });
     }).then(() => {
-      res.status(200);
+      res.status(200).send('Success');
     });
   }).catch((e) => {
     next(e);
