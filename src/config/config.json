@@ -4,11 +4,6 @@
     "password": "jiphyeonjeon",
     "database": "jiphyeonjeon",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "dialectOptions": {
-      "useUTC": false,
-      "dateStrings": true,
-      "typeCast": true
-    }
+    "dialect": "mysql"
   }
 }
