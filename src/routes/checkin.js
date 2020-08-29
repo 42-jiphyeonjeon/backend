@@ -1,6 +1,8 @@
 const express = require('express');
+const NotFound = require('../exceptions/NotFound');
+const BadRequest = require('../exceptions/BadRequest');
 const {
-  BookTiger, BookInfo, Checkout, Log, UserStatus,
+  Checkout, Log, UserStatus,
 } = require('../models');
 
 const router = express.Router();
@@ -23,6 +25,7 @@ router.post('/:checkoutId', (req, res) => {
   const { checkoutId } = req.params;
   const { active, checkinStatus } = req.body;
   Checkout.findByPk(checkoutId).then((result) => {
+    if (!result) throw new NotFound('checkout is not found');
     const now = new Date();
     const duedateMath = new Date(result.dueDate);
     const msDay = 60 * 60 * 24 * 1000;
@@ -54,8 +57,10 @@ router.post('/:checkoutId', (req, res) => {
     }).then(() => {
       Checkout.destroy({ where: { id: checkoutId } });
     }).then(() => {
-      res.send('메인으로 이동');
+      res.status(200);
     });
+  }).catch((e) => {
+    next(e);
   });
 });
 
