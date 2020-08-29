@@ -80,7 +80,7 @@ router.get('/search', (req, res) => {
 router.get('/overdue', (req, res) => {
   BookTiger.findAndCountAll({
     order: [[BookTiger.associations.Checkout, 'dueDate', 'ASC']],
-    attributes: ['id', 'identityNumber'],
+    attributes: ['id', 'identityNumber', 'active'],
     include: [
       {
         model: BookInfo,
