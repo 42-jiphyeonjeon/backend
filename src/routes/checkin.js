@@ -7,23 +7,10 @@ const {
 
 const router = express.Router();
 
-router.get('/:checkoutId', (req, res) => {
-  const { checkoutId } = req.params;
-  Checkout.findByPk(checkoutId, {
-    include: [{ all: true }, { model: BookTiger, include: [BookInfo] }],
-  }).then((result) => { res.json(result); });
-});
-
-// router.get('/:bookTigerId', (req, res) => {
-//   const { bookTigerId } = req.params;
-//   BookTiger.findByPk(bookTigerId, {
-//     include: [BookInfo, { model: Checkout, include: [UserAccount] }],
-//   }).then((result) => { res.json(result); });
-// });
-
-router.post('/:checkoutId', (req, res) => {
+router.post('/:checkoutId', (req, res, next) => {
   const { checkoutId } = req.params;
   const { active, checkinStatus } = req.body;
+  if (!checkoutId || active === undefined || !checkinStatus) throw new BadRequest('param or query is missing');
   Checkout.findByPk(checkoutId).then((result) => {
     if (!result) throw new NotFound('checkout is not found');
     const now = new Date();

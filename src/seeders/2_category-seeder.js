@@ -8,5 +8,5 @@ module.exports = {
     created_at: '2020-8-21',
     updated_at: '2020-8-21',
   }], {}),
-  down: async (queryInterface) => queryInterface.bulkDelete('category', null, {}),
+  down: async (queryInterface) => queryInterface.dropTable('category'),
 };

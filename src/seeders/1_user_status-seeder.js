@@ -9,5 +9,5 @@ module.exports = {
     updated_at: '2020-8-21',
     user_account_id: 2,
   }], {}),
-  down: async (queryInterface) => queryInterface.bulkDelete('user_status', null, {}),
+  down: async (queryInterface) => queryInterface.dropTable('user_status'),
 };
