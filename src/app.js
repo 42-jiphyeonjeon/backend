@@ -1,11 +1,10 @@
 const express = require('express');
 const models = require('./models');
 const errorHandler = require('./exceptions/error_handler');
+const router = require('./routes');
 
 const app = express();
 const port = 3000;
-
-const checkinRouter = require('./routes/checkin');
 
 models.sequelize
   .sync()
@@ -18,7 +17,7 @@ models.sequelize
   });
 
 app.use(express.json());
-app.use('/checkin', checkinRouter);
+app.use('/', router);
 app.use(errorHandler);
 
 app.listen(port, () => {
