@@ -5,12 +5,6 @@ const {
 
 const router = express.Router();
 
-Date.prototype.addDays = function (days) {
-  const date = new Date(this.valueOf());
-  date.setDate(date.getDate() + days);
-  return date;
-};
-
 router.get('/:checkoutId', (req, res) => {
   const { checkoutId } = req.params;
   Checkout.findByPk(checkoutId, {
@@ -27,20 +21,28 @@ router.get('/:checkoutId', (req, res) => {
 
 router.post('/:checkoutId', (req, res) => {
   const { checkoutId } = req.params;
-  const { deactive, checkinStatus } = req.body;
+  const { active, checkinStatus } = req.body;
   Checkout.findByPk(checkoutId).then((result) => {
     const now = new Date();
     const duedateMath = new Date(result.dueDate);
     const msDay = 60 * 60 * 24 * 1000;
     if (duedateMath < now) {
       const diff = Math.floor((now - duedateMath) / msDay);
-      // console.log(now, now.addDays(diff));
-      UserStatus.update({ banDate: now.addDays(diff) }, {
+      now.setDate(now.getDate() + diff);
+      UserStatus.update({ banDate: now }, {
         where: { UserAccountId: result.UserAccountId },
-      });
+      })
+        .catch((err) => {
+          console.error(err);
+        });
     }
-    if (deactive) {
-      console.log('book_tiger status update deactive');
+    if (!active) {
+      BookTiger.update({ active: 0 }, {
+        where: { Id: result.BookTigerId },
+      })
+        .catch((err) => {
+          console.error(err);
+        });
     }
     Log.create({
       dueDate: result.dueDate,
