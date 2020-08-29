@@ -34,7 +34,6 @@ function serializeBookTigerList(bookTigers) {
   return bookTigers.map(serializeBookTiger);
 }
 
-
 router.get('/search', (req, res) => {
   const resJson = { data: [], count: 0 };
   let searchWord = req.query.query;
