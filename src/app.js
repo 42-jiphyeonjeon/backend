@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const models = require('./models');
 const errorHandler = require('./exceptions/error_handler');
 const router = require('./routes');
@@ -17,6 +18,7 @@ models.sequelize
   });
 
 app.use(express.json());
+app.use(cors());
 app.use('/', router);
 app.use(errorHandler);
 
